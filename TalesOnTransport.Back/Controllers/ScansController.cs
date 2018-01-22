@@ -30,21 +30,21 @@ namespace TalesOnTransport.Back.Controllers
         {
             if (pin == 111111)
             {
-                var json = new { author = "FAKE Orson Scott Card", title = "FAKE Ender's Game", timesScanned = "a number of" };
+                var json = new { author = "FAKE Orson Scott Card", id = "6811b546-a97c-4c71-9166-70b7e8e13341", title = "FAKE Ender's Game", timesScanned = "a number of" };
                 return Json(json);
 
             }
 
             if (pin == 222222)
             {
-                var json = new { author = "FAKE Liu Cixin", title = "FAKE The Three Body Problem", timesScanned = "a number of" };
+                var json = new { author = "FAKE Liu Cixin", id = "b210efc1-bd90-43dd-b333-c566d7da170a", title = "FAKE The Three Body Problem", timesScanned = "a number of" };
                 return Json(json);
 
             }
 
             if (pin == 333333)
             {
-                var json = new { author = "FAKE Neal Stephenson", title = "FAKE Snow Crash", timesScanned = "a number of" };
+                var json = new { author = "FAKE Neal Stephenson", id = "ffc6ba8e-fac7-4869-b614-72482ac53710", title = "FAKE Snow Crash", timesScanned = "a number of" };
                 return Json(json);
 
             }
@@ -101,7 +101,7 @@ namespace TalesOnTransport.Back.Controllers
             _scanContext.Scan.Add(scan);
             await _scanContext.SaveChangesAsync();
 
-            var json = new { author = $"{book.Author}", title = $"{book.Title}", timesScanned = $"{book.TimesScanned}" };
+            var json = new { author = $"{book.Author}", id = $"{book.Id}", timesScanned = $"{book.TimesScanned}", title = $"{book.Title}" };
             return Json(json);
         }
 
