@@ -21,6 +21,7 @@ namespace TalesOnTransport.Back.Models
                     new Book
                     {
                         Id = new Guid("6811b546-a97c-4c71-9166-70b7e8e13341"),
+                        PIN = 111111,
                         Title = "Ender's Game",
                         Author = "Orson Scott Card",
                         TimesScanned = 2
@@ -28,6 +29,7 @@ namespace TalesOnTransport.Back.Models
                     new Book
                     {
                         Id = new Guid("b210efc1-bd90-43dd-b333-c566d7da170a"),
+                        PIN = 222222,
                         Title = "The Three Body Problem",
                         Author = "Liu Cixin",
                         TimesScanned = 1
@@ -35,6 +37,7 @@ namespace TalesOnTransport.Back.Models
                     new Book
                     {
                         Id = new Guid("ffc6ba8e-fac7-4869-b614-72482ac53710"),
+                        PIN = 333333,
                         Title = "Snow Crash",
                         Author = "Neal Stephenson",
                         TimesScanned = 1

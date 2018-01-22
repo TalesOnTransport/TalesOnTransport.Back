@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TalesOnTransport.Back.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace TalesOnTransport.Back
 {
@@ -30,6 +31,7 @@ namespace TalesOnTransport.Back
             services.AddDbContext<ScanContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ScanContext")));
             services.AddMvc();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

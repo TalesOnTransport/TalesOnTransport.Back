@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+//using Microsoft.EntityFrameworkCore;
 using TalesOnTransport.Back.Models;
 
 namespace TalesOnTransport.Back.Controllers
@@ -23,6 +23,86 @@ namespace TalesOnTransport.Back.Controllers
         {
             _bookContext = bookContext;
             _scanContext = scanContext;
+        }
+
+        [HttpPost("{pin:int}")]
+        public async Task<JsonResult> PostScan(int pin)
+        {
+            if (pin == 111111)
+            {
+                var json = new { author = "FAKE Orson Scott Card", title = "FAKE Ender's Game", timesScanned = "a number of" };
+                return Json(json);
+
+            }
+
+            if (pin == 222222)
+            {
+                var json = new { author = "FAKE Liu Cixin", title = "FAKE The Three Body Problem", timesScanned = "a number of" };
+                return Json(json);
+
+            }
+
+            if (pin == 333333)
+            {
+                var json = new { author = "FAKE Neal Stephenson", title = "FAKE Snow Crash", timesScanned = "a number of" };
+                return Json(json);
+
+            }
+
+            return new JsonResult(null) { StatusCode = (int)HttpStatusCode.NotFound };
+            
+            // fds
+            //Book book = _bookContext.Book.Where(b => b.PIN == pin).First();
+
+
+            //if (book == null)
+            //{
+            //    return new JsonResult(book) { StatusCode = (int)HttpStatusCode.NotFound };
+            //}
+
+            //using (var db = new BookContext() { })
+            //{
+            //    var book = db.Book
+            //               .Where(b => b.PIN == pin)
+            //               .First();
+
+            //    var a = 1;
+
+            //}
+
+            //var db = new BookContext();
+            //var book = db.Book
+            //               .Where(b => b.PIN == pin)
+            //               .First();
+
+            //return Json(new { hello = "world" });
+        }
+
+
+        [HttpPost("{bookId:guid}")]
+        public async Task<JsonResult> PostScan(Guid bookId)
+        {
+            Book book = _bookContext.Book.Find(bookId);
+
+            if (book == null)
+            {
+                return new JsonResult(book) { StatusCode = (int)HttpStatusCode.NotFound };
+            }
+
+            book.TimesScanned = book.TimesScanned + 1;
+            _bookContext.Book.Update(book);
+            await _bookContext.SaveChangesAsync();
+
+            Scan scan = new Scan
+            {
+                Id = new Guid(),
+                BookId = bookId
+            };
+            _scanContext.Scan.Add(scan);
+            await _scanContext.SaveChangesAsync();
+
+            var json = new { author = $"{book.Author}", title = $"{book.Title}", timesScanned = $"{book.TimesScanned}" };
+            return Json(json);
         }
 
         // GET: api/Scans
@@ -84,31 +164,6 @@ namespace TalesOnTransport.Back.Controllers
             }
 
             return NoContent();
-        }
-
-        [HttpPost("{bookId}")]
-        public async Task<JsonResult> PostScan(Guid bookId)
-        {
-            Book book = _bookContext.Book.Find(bookId);
-            if (book == null)
-            {
-                return new JsonResult(book) { StatusCode = (int)HttpStatusCode.NotFound };
-            }
-
-            book.TimesScanned = book.TimesScanned + 1;
-            _bookContext.Book.Update(book);
-            await _bookContext.SaveChangesAsync();
-
-            Scan scan = new Scan
-            {
-                Id = new Guid(),
-                BookId = bookId
-            };
-            _scanContext.Scan.Add(scan);
-            await _scanContext.SaveChangesAsync();
-
-            var json = new { author = $"{book.Author}", title = $"{book.Title}", timesScanned = $"{book.TimesScanned}" };
-            return Json(json);
         }
 
         // DELETE: api/Scans/5

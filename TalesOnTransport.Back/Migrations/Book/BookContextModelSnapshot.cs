@@ -27,11 +27,16 @@ namespace TalesOnTransport.Back.Migrations.Book
 
                     b.Property<string>("Author");
 
+                    b.Property<int>("PIN");
+
                     b.Property<int>("TimesScanned");
 
                     b.Property<string>("Title");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PIN")
+                        .IsUnique();
 
                     b.ToTable("Book");
                 });

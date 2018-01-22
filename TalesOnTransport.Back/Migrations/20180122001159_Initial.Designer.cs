@@ -4,15 +4,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using TalesOnTransport.Back.Models;
 
-namespace TalesOnTransport.Back.Migrations.Book
+namespace TalesOnTransport.Back.Migrations
 {
-    [DbContext(typeof(BookContext))]
-    [Migration("20180120035539_rename TimesScanned")]
-    partial class renameTimesScanned
+    [DbContext(typeof(ScanContext))]
+    [Migration("20180122001159_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,20 +20,16 @@ namespace TalesOnTransport.Back.Migrations.Book
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("TalesOnTransport.Back.Models.Book", b =>
+            modelBuilder.Entity("TalesOnTransport.Back.Models.Scan", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Author");
-
-                    b.Property<int>("TimesScanned");
-
-                    b.Property<string>("Title");
+                    b.Property<Guid>("BookId");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Book");
+                    b.ToTable("Scan");
                 });
 #pragma warning restore 612, 618
         }

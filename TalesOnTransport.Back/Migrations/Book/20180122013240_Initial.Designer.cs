@@ -11,8 +11,8 @@ using TalesOnTransport.Back.Models;
 namespace TalesOnTransport.Back.Migrations.Book
 {
     [DbContext(typeof(BookContext))]
-    [Migration("20180120030805_InitialBookMigration")]
-    partial class InitialBookMigration
+    [Migration("20180122013240_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,9 +28,16 @@ namespace TalesOnTransport.Back.Migrations.Book
 
                     b.Property<string>("Author");
 
+                    b.Property<int>("PIN");
+
+                    b.Property<int>("TimesScanned");
+
                     b.Property<string>("Title");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PIN")
+                        .IsUnique();
 
                     b.ToTable("Book");
                 });
